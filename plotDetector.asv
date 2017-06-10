@@ -90,21 +90,24 @@ for i=1:length(Way_2pt)
      p1 = polyfit(x1,y1,1);
     
     
-    for j=1:length(Way_2pt)
+    for j=1:length(Y)
         if(i~=-j  )    
-            x2 = [Way_2pt(j,1,1),Way_2pt(j,2,1)];
-            y2 = [Way_2pt(j,1,2),Way_2pt(j,2,2)];
+            tocmp_way_start = [X{j}(length(X{j})),Y{j}(length(Y{j}))];
+            tocmp_way_end = [X{j}(1),Y{j}(1)];
            %% diff_tocmp= tocmp_way_end-tocmp_way_start;
             %%slope_in=diff_tocmp(2)/diff_tocmp(1);
-           
+            x2 = [X{j}(:)];
+            y2 = [Y{j}(:)];
+            
             p2 = polyfit(x2,y2,1); 
         
-            x_intersect = fzero(@(x) polyval(p2-p1,x),1);
+            x_intersect = fzero(@(x) polyval(p1-p2,x),2);
             
             y_intersect = polyval(p1,x_intersect);
             
             if(x_intersect >=min(x2) && x_intersect >= min(x1) && x_intersect <=max(x2) && x_intersect <= max(x1) && y_intersect >= min(y2) && y_intersect >= min(y1) && y_intersect <= max(y2) && y_intersect <=max(y1) )
-         
+              
+        
                 plot(x_intersect,y_intersect,'r*')
                 count=count+1;
                 drawnow;
