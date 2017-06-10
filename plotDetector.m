@@ -62,7 +62,7 @@ for cell_num = 1:length(cellarray_ways)
     end
 end
 count = 0;
-for i=1:288
+for i=1:length(X)
     curr_way_start = [X{i}(length(X{i})),Y{i}(length(Y{i}))];
     curr_way_end = [X{i}(1),Y{i}(1)];
     
@@ -77,18 +77,18 @@ for i=1:288
         if(i~=-j  )    
             tocmp_way_start = [X{j}(length(X{j})),Y{j}(length(Y{j}))];
             tocmp_way_end = [X{j}(1),Y{j}(1)];
-            diff_tocmp= tocmp_way_end-tocmp_way_start;
-            slope_in=diff_tocmp(2)/diff_tocmp(1);
+           %% diff_tocmp= tocmp_way_end-tocmp_way_start;
+            %%slope_in=diff_tocmp(2)/diff_tocmp(1);
             x2 = [X{j}(:)];
             y2 = [Y{j}(:)];
-           
+            
             p2 = polyfit(x2,y2,1); 
         
             x_intersect = fzero(@(x) polyval(p1-p2,x),2);
             
-            y_intersect = polyval(p2,x_intersect);
+            y_intersect = polyval(p1,x_intersect);
             
-            if(x_intersect >=min(x2) && x_intersect >=min(x1) && x_intersect <=max(x2) && x_intersect <= max(x1) && y_intersect >= min(y2) && y_intersect >= min(y1) && y_intersect <= max(y2) && y_intersect <=max(y1) )
+            if(x_intersect >=min(x2) && x_intersect >= min(x1) && x_intersect <=max(x2) && x_intersect <= max(x1) && y_intersect >= min(y2) && y_intersect >= min(y1) && y_intersect <= max(y2) && y_intersect <=max(y1) )
               
         
                 plot(x_intersect,y_intersect,'r*')
