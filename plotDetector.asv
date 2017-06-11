@@ -47,7 +47,7 @@ for cell_num = 1:length(cellarray_ways)
         %following code is used to detect if the path(set of points) is a
         %relatively straight line
         [p,struct] = polyfit( Ways(cell_num,1:length(cellarray_ways{cell_num}),1) , Ways(cell_num,1:length(cellarray_ways{cell_num}),2) ,1)
-        if(struct.df<9 )% .df is a measure of straightness (dont know/need the exact details)
+        if(struct.df<900000 )% .df is a measure of straightness (dont know/need the exact details)
             
             plot( Ways(cell_num,1:length(cellarray_ways{cell_num}),1) , Ways(cell_num,1:length(cellarray_ways{cell_num}),2) ,'g');
             X{end+1}= Ways(cell_num,1:length(cellarray_ways{cell_num}),1);
@@ -75,6 +75,9 @@ end
                 %ending point
                 Way_2pt(end , 2 , 1)= Ways(cell_num,iter+1,1);
                 Way_2pt(end , 2 , 2)= Ways(cell_num,iter+1,2);
+                x=[  Ways(cell_num,iter,1);,Ways(cell_num,iter+1,1)];
+                y=[  Ways(cell_num,iter,2);,Ways(cell_num,iter+1,2)];
+                plot(x,y)
             end
         end
 
@@ -90,26 +93,25 @@ for i=1:length(Way_2pt)
      p1 = polyfit(x1,y1,1);
     
     
-    for j=1:length(Y)
+    for j=1:length(Way_2pt)
         if(i~=-j  )    
-            tocmp_way_start = [X{j}(length(X{j})),Y{j}(length(Y{j}))];
-            tocmp_way_end = [X{j}(1),Y{j}(1)];
+            x2 = [Way_2pt(j,1,1),Way_2pt(j,2,1)];
+            y2 = [Way_2pt(j,1,2),Way_2pt(j,2,2)];
            %% diff_tocmp= tocmp_way_end-tocmp_way_start;
             %%slope_in=diff_tocmp(2)/diff_tocmp(1);
-            x2 = [X{j}(:)];
-            y2 = [Y{j}(:)];
-            
+           
             p2 = polyfit(x2,y2,1); 
         
-            x_intersect = fzero(@(x) polyval(p1-p2,x),2);
+            x_intersect = fzero(@(x) polyval(p1-p2,x),3);
             
             y_intersect = polyval(p1,x_intersect);
             
-            if(x_intersect >=min(x2) && x_intersect >= min(x1) && x_intersect <=max(x2) && x_intersect <= max(x1) && y_intersect >= min(y2) && y_intersect >= min(y1) && y_intersect <= max(y2) && y_intersect <=max(y1) )
-              
-        
+            if(((abs(x_intersect-min(x2))<0.01 &&abs(x_intersect-min(x1))<0.01) || (abs(x_intersect-max(x2))<0.01 && abs(x_intersect-max(x1))<0.01)) && ((abs(y_intersect-min(y2))<0.01 && abs(y_intersect-min(y1))<0.01) ||( y_intersect <= max(y2) && y_intersect <=max(y1) ))
+         
                 plot(x_intersect,y_intersect,'r*')
-                count=count+1;
+                count=count+1
+                disp('Has been plotted ')
+                saveas(gcf,'CV2','jpg')
                 drawnow;
             end
        end

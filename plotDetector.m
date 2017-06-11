@@ -47,7 +47,7 @@ for cell_num = 1:length(cellarray_ways)
         %following code is used to detect if the path(set of points) is a
         %relatively straight line
         [p,struct] = polyfit( Ways(cell_num,1:length(cellarray_ways{cell_num}),1) , Ways(cell_num,1:length(cellarray_ways{cell_num}),2) ,1)
-        if(struct.df<9 )% .df is a measure of straightness (dont know/need the exact details)
+        if(struct.df<900000 )% .df is a measure of straightness (dont know/need the exact details)
             
             plot( Ways(cell_num,1:length(cellarray_ways{cell_num}),1) , Ways(cell_num,1:length(cellarray_ways{cell_num}),2) ,'g');
             X{end+1}= Ways(cell_num,1:length(cellarray_ways{cell_num}),1);
@@ -72,9 +72,14 @@ end
                 %starting point
                 Way_2pt(end+1 ,1 ,1) = Ways(cell_num,iter,1);
                 Way_2pt(end ,1 ,2) = Ways(cell_num,iter,2);
+                Way_2pt(end ,3,1) = cell_num;
                 %ending point
                 Way_2pt(end , 2 , 1)= Ways(cell_num,iter+1,1);
                 Way_2pt(end , 2 , 2)= Ways(cell_num,iter+1,2);
+                 Way_2pt(end , 3 , 1)=cell_num;
+                x=[  Ways(cell_num,iter,1);,Ways(cell_num,iter+1,1)];
+                y=[  Ways(cell_num,iter,2);,Ways(cell_num,iter+1,2)];
+            %%    plot(x,y)
             end
         end
 
@@ -82,31 +87,35 @@ end
     end
 count = 0;
 for i=1:length(Way_2pt)
-    x1 = [Way_2pt(i,1,1),Way_2pt(i,2,1)];
-    y1 = [Way_2pt(i,1,2),Way_2pt(i,2,2)];
-    
+    x1 = Way_2pt(i,2,1);
+    y1 = Way_2pt(i,2,2);
+    cell1=Way_2pt(i,3,1);
    
     
-     p1 = polyfit(x1,y1,1);
+   %%  p1 = polyfit(x1,y1,1);
     
     
     for j=1:length(Way_2pt)
         if(i~=-j  )    
-            x2 = [Way_2pt(j,1,1),Way_2pt(j,2,1)];
-            y2 = [Way_2pt(j,1,2),Way_2pt(j,2,2)];
+            x2 = Way_2pt(j,1,1);
+            y2 = Way_2pt(j,1,2);
+            cell2=Way_2pt(j,3,1);
            %% diff_tocmp= tocmp_way_end-tocmp_way_start;
             %%slope_in=diff_tocmp(2)/diff_tocmp(1);
            
-            p2 = polyfit(x2,y2,1); 
+      %%%      p2 = polyfit(x2,y2,1); 
         
-            x_intersect = fzero(@(x) polyval(p2-p1,x),1);
+      %%      x_intersect = fzero(@(x) polyval(p1-p2,x),3);
             
-            y_intersect = polyval(p1,x_intersect);
+     %%       y_intersect = polyval(p1,x_intersect);
             
-            if(x_intersect >=min(x2) && x_intersect >= min(x1) && x_intersect <=max(x2) && x_intersect <= max(x1) && y_intersect >= min(y2) && y_intersect >= min(y1) && y_intersect <= max(y2) && y_intersect <=max(y1) )
+     %%       if(((abs(x_intersect-min(x2))<0.001 &&abs(x_intersect-min(x1))<0.001) || (abs(x_intersect-max(x2))<0.001 && abs(x_intersect-max(x1))<0.001)) && ((abs(y_intersect-min(y2))<0.001 && abs(y_intersect-min(y1))<0.001) ||( abs(y_intersect-max(y2))<0.001 && abs(y_intersect-max(y1))<0.001)))
          
-                plot(x_intersect,y_intersect,'r*')
-                count=count+1;
+            if (x1==x2 && y1==y2 && cell1~=cell2)  
+                plot(x2,y2,'r*')
+                count=count+1; 
+                disp('Has been plotted ')
+                saveas(gcf,'CV2','jpg')
                 drawnow;
             end
        end
