@@ -86,6 +86,7 @@ end
 
     end
 count = 0;
+intersections=[];
 for i=1:length(Way_2pt)
     x1 = Way_2pt(i,2,1);
     y1 = Way_2pt(i,2,2);
@@ -112,15 +113,23 @@ for i=1:length(Way_2pt)
      %%       if(((abs(x_intersect-min(x2))<0.001 &&abs(x_intersect-min(x1))<0.001) || (abs(x_intersect-max(x2))<0.001 && abs(x_intersect-max(x1))<0.001)) && ((abs(y_intersect-min(y2))<0.001 && abs(y_intersect-min(y1))<0.001) ||( abs(y_intersect-max(y2))<0.001 && abs(y_intersect-max(y1))<0.001)))
          
             if (x1==x2 && y1==y2 && cell1~=cell2)  
-                plot(x2,y2,'r*')
-                count=count+1; 
-                disp('Has been plotted ')
-                saveas(gcf,'CV2','jpg')
+                count=count+1;
+                intersections(count,1)=x1;
+                intersections(count,2)=y1;
+                intersections(count,3)=cell1;
+                intersections(count,4)=cell2;
+                 
+              
+     %%           saveas(gcf,'CV2','jpg')
                 drawnow;
             end
        end
     end
 end
 
+for i=1:count
 
+plot(intersections(i,1),intersections(i,2),'r*')
+
+end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
