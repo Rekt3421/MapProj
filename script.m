@@ -2,21 +2,7 @@
 hold on
 clear all
 load('cellarray_ways.mat', 'cellarray_ways');
-blocks={};
-blocks{1}=[76,77,69,70];
-blocks{2}=[191,219,263,264];
-blocks{3}=[191,219,264,265];
-blocks{4}=[110,109,158,126];
-blocks{5}=[130,131,133,135];
-blocks{6}=[241,242,235,238];
-blocks{7}=[191,219,262,263];
-blocks{8}=[191,219,261,262];
-blocks{9}=[141,142,252,155];
-blocks{10}=[166,165,74,167];
-blocks{11}=[166,97,165,167];
-blocks{12}=[166,83,74,97];
-blocks{13}=[63,83,74,97];
-blocks{14}=[63,80,74,97];
+load('blocks.mat','blocks')
 num_of_blocks=size(blocks)
 
 for iii=1:num_of_blocks(2)
@@ -64,7 +50,7 @@ for cell_num = 1:length(cellarray_ways)
         %following code is used to detect if the path(set of points) is a
         %relatively straight line
         [p,struct] = polyfit( Ways(cell_num,1:length(cellarray_ways{cell_num}),1) , Ways(cell_num,1:length(cellarray_ways{cell_num}),2) ,1)
-        if(struct.df<8 )% .df is a measure of straightness (dont know/need the exact details)
+        if(struct.df<90000000000000000 )% .df is a measure of straightness (dont know/need the exact details)
             
             plot( Ways(cell_num,1:length(cellarray_ways{cell_num}),1) , Ways(cell_num,1:length(cellarray_ways{cell_num}),2) ,'g');
             X{end+1}= Ways(cell_num,1:length(cellarray_ways{cell_num}),1);
@@ -89,12 +75,14 @@ way_start={};
 diff={};
 for i = 1:length( manual_ways_toshow)
     
-    
+   
     way_end{i}=[X{i}(1),Y{i}(1)];   
     way_start{i}=[X{i}(length(X{i})),Y{i}(length(Y{i}))];
     diff{i}=way_end{i}-way_start{i};
     slopes(i)=(diff{i}(2)/diff{i}(1));
-end
+
+ 
+end    
 slopes1=slopes;
 slopes=abs(slopes);
 one=min(slopes);
