@@ -52,7 +52,7 @@ for each in intersections:
 		print "RESULLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLT =====" , each[3]
 		x=raw_input('Temp')
 		print res 
-		count = count +1 
+	count = count +1 
 
 
 
