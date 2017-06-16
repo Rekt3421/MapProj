@@ -47,7 +47,7 @@ for each in intersections:
 		print "target = " , each[2]
 		data = intersections
 		data[count][1]=1
-		res = BFS(each[2],each[3],intersections,[each[2]],1)
+		res = BFS(each[2],each[3],data,[each[2]],1)
 
 		print "RESULLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLT =====" , each[3]
 		x=raw_input('Temp')
