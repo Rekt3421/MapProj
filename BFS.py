@@ -14,7 +14,6 @@ def BFS(start , end , data, path,count):
 		if (each[2] == start or each[3] == start )  :
 			if each[2] == start and each[3] not in neighbours  and not each[1] == 1 : 
 				neighbours.append(each[3])
-				
 				data[temp][1]=1
 			elif each[3] == start and each[2] not in neighbours and not each[1] == 1: 
 				neighbours.append(each[2])
