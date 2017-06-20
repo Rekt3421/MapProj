@@ -1,5 +1,4 @@
 %% load data into matlab
-hold on
 clear all
 load('cellarray_ways.mat', 'cellarray_ways');
 blocks = load(' blocks.mat')

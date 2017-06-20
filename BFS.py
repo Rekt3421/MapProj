@@ -15,7 +15,7 @@ def BFS(start , end , data, path,way,count,offset):
 	biggerways = []
 	temp = 0
 	for each in data:
-		if (each[2] == start or each[3] == start )  
+		if (each[2] == start or each[3] == start )  and each[4+offset] not in way  :
 			if each[2] == start  : 
 				neighbours.append(each[3])
 				biggerways.append(each[5])
