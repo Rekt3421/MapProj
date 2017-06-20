@@ -137,56 +137,5 @@ blocks={};
 blocks1={};
 block_num = 0;
 
-for i = 1 : count
-    int1=intersections(i,3);
-    int2=intersections(i,4);
-    way1=intersections(i,5);
-     way2=intersections(i,6);
-    
-      for j = 1 : count
-          if ( (intersections(j,3)==int1 ||  intersections(j,4)==int1))
-             int3=intersections(j,3);
-              way3=intersections(j,5);
-             if int3 == int1 || int3==int2
-                int3=intersections(j,4);
-                way3=intersections(j,6);
-             end
-          
-          end
-            for k = 1 : count
-             if ( (intersections(k,3)==int2 ||  intersections(k,4)==int2))
-                 int4=intersections(k,3);
-                  way4=intersections(k,5);
-                 if int4 == int2 || int4 == int1 || int4== int3
-                        int4=intersections(k,4);
-                        way4=intersections(k,6);
-                 end
-                 
-                 for z= 1 : count
-                       if((intersections(z,3)==int3 && intersections(z,4)==int4) || (intersections(z,3)==int4 && intersections(z,4)==int3) )
-                         if(int1~=int4 && int2~=int3 && int1~=int3 && int2~=int4 && int1~=int2 && int3~=int4 &&way1~=way2 && way2~=way3 && way3~=way4 && way1~=way4 && way2~=way4 &&way1~=way3)    
-                           disp('inside')
-                           block_num
-                            found = 0;
-                            for i1=1:block_num
-                                temp=sort(blocks{block_num});
-                                tocmp=sort([way1,way2,way3,way4]);
-                                if( temp==tocmp)
-                                     found = 1;   
-                                end
-                            end
-                            if(found == 0)
-                                block_num=block_num+1;
-                                blocks{block_num}=sort([way1,way2,way3,way4]);
-                                blocks1{block_num}=[int1,int2,int3,int4];
-                            end
-                         end   
-                       end
-                 end        
-             
-             end
-           end    
-      end
-end
-save('blocks.mat','blocks')
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

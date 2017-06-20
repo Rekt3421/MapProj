@@ -41,7 +41,7 @@ Y={};
 for cell_num = 1:length(cellarray_ways)
     %plot(Ways(cell_num,:,1) , Ways(cell_num,:,2));
   
-     manual_ways_toshow=blocks{iii};
+     manual_ways_toshow=[209,214,210,217,314];
   %%manual_ways_toshow=[1:319]
 %% manual_ways_toshow=[63,80,74,97];
     if (sum(cell_num==manual_ways_toshow)==1)
