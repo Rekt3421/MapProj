@@ -32,7 +32,6 @@ end
 
 
 
-hold on
 X={};
 Y={};
 
@@ -53,7 +52,7 @@ for cell_num = 1:length(cellarray_ways)
         [p,struct] = polyfit( Ways(cell_num,1:length(cellarray_ways{cell_num}),1) , Ways(cell_num,1:length(cellarray_ways{cell_num}),2) ,1)
         if(struct.df<90000000000000000 )% .df is a measure of straightness (dont know/need the exact details)
             
-            plot( Ways(cell_num,1:length(cellarray_ways{cell_num}),1) , Ways(cell_num,1:length(cellarray_ways{cell_num}),2) ,'g');
+            plot( Ways(cell_num,1:length(cellarray_ways{cell_num}),1) , Ways(cell_num,1:length(cellarray_ways{cell_num}),2) );
             X{end+1}= Ways(cell_num,1:length(cellarray_ways{cell_num}),1);
             Y{end+1}= Ways(cell_num,1:length(cellarray_ways{cell_num}),2);
         else
@@ -63,9 +62,12 @@ for cell_num = 1:length(cellarray_ways)
         % number the lines for easy marking of paths
         text(max(Ways(cell_num,1:length(cellarray_ways{cell_num}),1)),max(Ways(cell_num,1:length(cellarray_ways{cell_num}),2)),num2str(cell_num))
         disp('^');
+    
     end
-end
 
+
+end
+drawnow;
 
 
 
